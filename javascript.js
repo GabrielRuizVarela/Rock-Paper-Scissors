@@ -4,13 +4,13 @@ function computerPlay(){
     else if(n===1){return 'paper'}
     else if (n===2){return 'scissors'}
 }
-// console.log(computerSelection());
+
 function firstLetterUpperCase(str){
     return str.slice(0,1).toUpperCase() + str.slice(1)
 }
 
 function playRound(playerSelection, computerSelection){
-    let outcome, player = playerSelection.toLowerCase();
+    let player = playerSelection.toLowerCase();
     if(player===computerSelection){
         return ["Tie, try again!", 0, 0]
     }
@@ -24,19 +24,18 @@ function playRound(playerSelection, computerSelection){
 }
 
 function game(){
-    let player, p = 0, c = 0, outcome;
-    // for(let i=0; i<5; i++){
-    while(c<3 && p<3){
-        player = prompt(`Best of Five!\nRock, paper, scissors, shoot! Score: You ${p}, Me ${c}`).toLocaleLowerCase();
+    let player, playerScore = 0, computerScore = 0, outcome;
+    while(computerScore<3 && playerScore<3){
+        player = prompt(`Best of Five!\nRock, paper, scissors, shoot!`).toLocaleLowerCase();
         if (player!=="rock" && player!=="paper" && player!=="scissors"){
             console.log("Invalid input, please try again")
             continue
         }
         outcome = playRound(player,computerPlay());
-        p += outcome[1];
-        c += outcome[2];
-        alert(`${outcome[0]} Score: You ${p}, Me ${c}`);
-        console.log(`${outcome[0]} Score: You ${p}, Me ${c}`);
+        playerScore += outcome[1];
+        computerScore += outcome[2];
+        alert(`${outcome[0]} Score: You ${playerScore}, Me ${computerScore}`);
+        console.log(`${outcome[0]} Score: You ${playerScore}, Me ${computerScore}`);
     }
 }
 game()
