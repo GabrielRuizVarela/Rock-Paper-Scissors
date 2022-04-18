@@ -1,41 +1,38 @@
 function computerPlay(){
     let n = Math.round(Math.random()*2);
-    if (n===0) {return 'rock';}
-    else if(n===1){return 'paper';}
-    else if (n===2){return 'scissors';}
+    if (n===0) {return 'Rock';}
+    else if(n===1){return 'Paper';}
+    else if (n===2){return 'Scissors';}
 }
 
-function firstLetterUpperCase(str){
-    return str.slice(0,1).toUpperCase() + str.slice(1);
-}
-
-function playRound(playerSelection, computerSelection){
-    let player = playerSelection.toLowerCase();
+function playRound(){
+    let computerSelection = computerPlay(), player = this.textContent;
+    const outcome = document.querySelector(".outcome"), 
+        playerScore = document.querySelector(".score.player"),
+        computerScore = document.querySelector(".score.computer")
     if(player===computerSelection){
-        return ["Tie, try again!", 0, 0];
+        outcome.textContent = "Tie, try again!";
     }
-    else if((player==="rock" && computerSelection==='scissors') || (player==="paper" && computerSelection==="rock") ||
-            player==="scissors" && computerSelection==="paper"){
-        return [`You Win! ${firstLetterUpperCase(player)} beats ${firstLetterUpperCase(computerSelection)}`, 1, 0];
+    else if((player==="Rock" && computerSelection==='Scissors') || (player==="Paper" && computerSelection==="Rock") ||
+            player==="Scissors" && computerSelection==="Paper"){
+            outcome.textContent = `You Win! ${player} beats ${computerSelection}`;
+            playerScore.textContent = Number(playerScore.textContent)+1;
     }
     else {
-        return [`You Lose! ${firstLetterUpperCase(computerSelection)} beats ${firstLetterUpperCase(player)}`, 0 ,1];
+        outcome.textContent = `You Lose! ${computerSelection} beats ${player}`;
+        computerScore.textContent = Number(computerScore.textContent)+1;
+    }
+    if(playerScore.textContent==="5"){
+        alert(`You Win ${playerScore.textContent} vs ${computerScore.textContent}`);
+        playerScore.textContent = 0;
+        computerScore.textContent = 0;
+    }
+    if(computerScore.textContent==="5"){
+        alert(`You Loose ${playerScore.textContent} vs ${computerScore.textContent}`);
+        playerScore.textContent = 0;
+        computerScore.textContent = 0;
     }
 }
 
-function game(){
-    let player, playerScore = 0, computerScore = 0, outcome;
-    while(computerScore<3 && playerScore<3){
-        player = prompt(`Best of Five!\nRock, paper, scissors, shoot!`).toLocaleLowerCase();
-        if (player!=="rock" && player!=="paper" && player!=="scissors"){
-            console.log("Invalid input, please try again")
-            continue;
-        }
-        outcome = playRound(player,computerPlay());
-        playerScore += outcome[1];
-        computerScore += outcome[2];
-        alert(`${outcome[0]} Score: You ${playerScore}, Me ${computerScore}`);
-        console.log(`${outcome[0]} Score: You ${playerScore}, Me ${computerScore}`);
-    }
-}
-game()
+const buttons = document.querySelectorAll("button");
+buttons.forEach(button => button.addEventListener("click",playRound));
